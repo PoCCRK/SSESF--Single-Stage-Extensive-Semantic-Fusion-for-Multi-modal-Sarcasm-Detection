@@ -1,0 +1,705 @@
+Namespace(aa='rand-m9-mstd0.5-inc1', auto_resume=True, batch_size=16, captioning_mask_prob=0.6, checkpoint_activations=True, clip_grad=None, color_jitter=0.4, crop_pct=None, cutmix=0, cutmix_minmax=None, data_path='/hy-tmp/data/data-of-multimodal-sarcasm-detection/text', device='cuda', dist_eval=False, dist_on_itp=False, dist_url='env://', distributed=False, drop_path=0.01, drop_worst_after=12000, drop_worst_ratio=0.2, enable_deepspeed=False, epochs=20, eval=False, eval_batch_size=None, finetune='/hy-tmp/models/beit3_base/beit3_base_patch16_224.pth', initial_scale_power=16, input_size=224, label_smoothing=0.1, layer_decay=1.0, length_penalty=0.6, local_rank=-1, log_dir='/root/logs', lr=2e-05, min_lr=1e-06, mixup=0, mixup_mode='batch', mixup_prob=1.0, mixup_switch_prob=0.5, model='beit3_base_patch16_224', model_ema=False, model_ema_decay=0.9999, model_ema_force_cpu=False, model_key='model|module', model_prefix='', momentum=0.9, nb_classes=1000, num_beams=3, num_max_bpe_tokens=64, num_workers=10, opt='adamw', opt_betas=[0.9, 0.999], opt_eps=1e-08, output_dir='/hy-tmp/models/best_state', pin_mem=True, randaug=True, recount=1, remode='pixel', reprob=0.25, resplit=False, resume='', save_ckpt=True, save_ckpt_freq=5, seed=42, sentencepiece_model='/root/code/beit3/beit3.spm', smoothing=0.1, start_epoch=0, task='sarcasm', task_cache_path='/hy-tmp/models/best_state', task_head_lr_weight=20.0, train_interpolation='bicubic', update_freq=1, vocab_size=64010, warmup_epochs=1, warmup_lr=1e-06, warmup_steps=-1, weight_decay=0.01, world_size=1, zero_stage=0)
+model_config = beit3_base_patch16_224_sarcasm
+Model = BEiT3ForSarcasmDetection(
+  (beit3): BEiT3(
+    (text_embed): TextEmbedding(64010, 768)
+    (vision_embed): VisionEmbedding(
+      (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+    )
+    (encoder): Encoder(
+      (dropout_module): Dropout(p=0.0, inplace=False)
+      (embed_positions): MutliwayEmbedding(
+        (A): PositionalEmbedding(199, 768)
+        (B): PositionalEmbedding(1024, 768)
+      )
+      (layers): ModuleList(
+        (0): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (1): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0009090909090909091)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (2): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0018181818181818182)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (3): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0027272727272727275)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (4): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0036363636363636364)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (5): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.004545454545454545)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (6): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.005454545454545455)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (7): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.006363636363636364)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (8): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.007272727272727273)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (9): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.008181818181818182)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (10): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.00909090909090909)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+        (11): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (v_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (q_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (out_proj): MultiwayNetwork(
+              (A): Linear(in_features=768, out_features=768, bias=True)
+              (B): Linear(in_features=768, out_features=768, bias=True)
+            )
+            (inner_attn_ln): MultiwayNetwork(
+              (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.01)
+          (ffn): MultiwayNetwork(
+            (A): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+            (B): FeedForwardNetwork(
+              (activation_dropout_module): Dropout(p=0.0, inplace=False)
+              (dropout_module): Dropout(p=0.0, inplace=False)
+              (fc1): Linear(in_features=768, out_features=3072, bias=True)
+              (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+          (final_layer_norm): MultiwayNetwork(
+            (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (layer_norm): MultiwayNetwork(
+        (A): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        (B): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (expert): Encoder(
+      (dropout_module): Dropout(p=0.0, inplace=False)
+      (layers): ModuleList(
+        (0): EncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=768, out_features=768, bias=True)
+            (v_proj): Linear(in_features=768, out_features=768, bias=True)
+            (q_proj): Linear(in_features=768, out_features=768, bias=True)
+            (out_proj): Linear(in_features=768, out_features=768, bias=True)
+            (inner_attn_ln): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (dropout_module): Dropout(p=0.0, inplace=False)
+          )
+          (self_attn_layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          (dropout_module): Dropout(p=0.0, inplace=False)
+          (drop_path): DropPath(p=0.0)
+          (ffn): FeedForwardNetwork(
+            (activation_dropout_module): Dropout(p=0.0, inplace=False)
+            (dropout_module): Dropout(p=0.0, inplace=False)
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (ffn_layernorm): LayerNorm((3072,), eps=1e-05, elementwise_affine=True)
+          )
+          (final_layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+      (layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (pooler): Pooler(
+    (norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    (dense): Linear(in_features=768, out_features=768, bias=True)
+    (activation): Tanh()
+  )
+  (head): Sequential(
+    (0): Linear(in_features=768, out_features=1536, bias=True)
+    (1): LayerNorm((1536,), eps=1e-05, elementwise_affine=True)
+    (2): GELU(approximate=none)
+    (3): Linear(in_features=1536, out_features=2, bias=True)
+  )
+)
+number of params: 229863938
+LR = 0.00002000
+Batch size = 16
+Update frequent = 1
+Number of training examples = 19816
+Number of training training per epoch = 1238
+Assigned values = [1.0, 20.0]
+Start training for 20 epochs
+{'epoch': 0, 'step': '0/1238', 'loss': 1.3800048828125}
+{'loss_scale': 65536.0, 'lr': 0.0, 'min_lr': 0.0, 'weight_decay': 0.01, 'grad_norm': tensor(16.6958, device='cuda:0')}
+{'epoch': 0, 'step': '10/1238', 'loss': 1.4571533203125}
+{'loss_scale': 32768.0, 'lr': 3.233629749393694e-06, 'min_lr': 1.6168148746968472e-07, 'weight_decay': 0.01, 'grad_norm': tensor(17.3057, device='cuda:0')}
+{'epoch': 0, 'step': '20/1238', 'loss': 1.396392822265625}
+{'loss_scale': 32768.0, 'lr': 6.467259498787388e-06, 'min_lr': 3.2336297493936943e-07, 'weight_decay': 0.01, 'grad_norm': tensor(18.8685, device='cuda:0')}
+{'epoch': 0, 'step': '30/1238', 'loss': 1.141693115234375}
+{'loss_scale': 32768.0, 'lr': 9.700889248181084e-06, 'min_lr': 4.850444624090542e-07, 'weight_decay': 0.01, 'grad_norm': tensor(16.9469, device='cuda:0')}
+{'epoch': 0, 'step': '40/1238', 'loss': 1.1825637817382812}
+{'loss_scale': 32768.0, 'lr': 1.2934518997574777e-05, 'min_lr': 6.467259498787389e-07, 'weight_decay': 0.01, 'grad_norm': tensor(15.5531, device='cuda:0')}
+{'epoch': 0, 'step': '50/1238', 'loss': 1.1087875366210938}
+{'loss_scale': 32768.0, 'lr': 1.6168148746968473e-05, 'min_lr': 8.084074373484237e-07, 'weight_decay': 0.01, 'grad_norm': tensor(13.9353, device='cuda:0')}
+{'epoch': 0, 'step': '60/1238', 'loss': 1.0544662475585938}
+{'loss_scale': 32768.0, 'lr': 1.940177849636217e-05, 'min_lr': 9.700889248181083e-07, 'weight_decay': 0.01, 'grad_norm': tensor(13.6474, device='cuda:0')}
+{'epoch': 0, 'step': '70/1238', 'loss': 1.0802116394042969}
+{'loss_scale': 32768.0, 'lr': 2.263540824575586e-05, 'min_lr': 1.1317704122877931e-06, 'weight_decay': 0.01, 'grad_norm': tensor(15.4490, device='cuda:0')}
+{'epoch': 0, 'step': '80/1238', 'loss': 0.7776222229003906}
+{'loss_scale': 32768.0, 'lr': 2.5869037995149554e-05, 'min_lr': 1.2934518997574777e-06, 'weight_decay': 0.01, 'grad_norm': tensor(13.7200, device='cuda:0')}
+{'epoch': 0, 'step': '90/1238', 'loss': 0.9612007141113281}
+{'loss_scale': 32768.0, 'lr': 2.910266774454325e-05, 'min_lr': 1.4551333872271625e-06, 'weight_decay': 0.01, 'grad_norm': tensor(18.3592, device='cuda:0')}
+{'epoch': 0, 'step': '100/1238', 'loss': 0.9037494659423828}
+{'loss_scale': 32768.0, 'lr': 3.2336297493936946e-05, 'min_lr': 1.6168148746968473e-06, 'weight_decay': 0.01, 'grad_norm': tensor(16.2118, device='cuda:0')}
+{'epoch': 0, 'step': '110/1238', 'loss': 0.9973926544189453}
+{'loss_scale': 32768.0, 'lr': 3.556992724333064e-05, 'min_lr': 1.778496362166532e-06, 'weight_decay': 0.01, 'grad_norm': tensor(18.9234, device='cuda:0')}
